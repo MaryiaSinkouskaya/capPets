@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>pr3</groupId>
-	<artifactId>pr3-parent</artifactId>
+	<artifactId>pr3</artifactId>
 	<version>${revision}</version>
 	<packaging>pom</packaging>
 
-	<name>pr3 parent</name>
+	<name>pr3</name>
 
 	<properties>
 		<!-- OUR VERSION -->

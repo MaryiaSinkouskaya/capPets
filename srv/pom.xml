@@ -2,15 +2,15 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<artifactId>pr3-parent</artifactId>
+		<artifactId>pr3</artifactId>
 		<groupId>pr3</groupId>
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>pr3</artifactId>
+	<artifactId>srv</artifactId>
 	<packaging>jar</packaging>
 
-	<name>pr3</name>
+	<name>srv</name>
 
 	<!-- ACTUAL DEPENDENCIES -->
 	<dependencies>
