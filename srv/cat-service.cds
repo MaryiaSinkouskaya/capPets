@@ -1,7 +1,6 @@
 using my.models as my from '../db/data-model';
 
 service CatalogService {
-   entity Users as SELECT from my.Users;
 
    entity Cats as SELECT from my.Cats;
    entity Dogs as SELECT from my.Dogs;
@@ -16,5 +15,10 @@ service CatalogService {
 
     entity Pets as projection on my.Pets actions {
             action changeUser(user : Users) returns Pets;
-        };
+    };
+
+    entity Users as projection on my.Users actions {
+            action attachUser(type : String) returns Users;
+    };
+
 }
