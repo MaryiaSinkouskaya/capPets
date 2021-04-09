@@ -2,9 +2,7 @@ package pr3.handlers;
 
 import cds.gen.catalogservice.AttachUserContext;
 import cds.gen.catalogservice.CatalogService_;
-import cds.gen.catalogservice.Cats_;
 import cds.gen.catalogservice.ChangeUserContext;
-import cds.gen.catalogservice.Dogs_;
 import cds.gen.catalogservice.Pets;
 import cds.gen.catalogservice.Pets_;
 import cds.gen.catalogservice.Users;
@@ -39,19 +37,9 @@ public class CatalogServiceHandler implements EventHandler {
 
     @On(entity = Pets_.CDS_NAME)
     public void onChangeUser(ChangeUserContext context) {
-
         Integer petId = (Integer) analyzer.analyze(context.getCqn()).targetKeys().get("ID");
-
-        Users user = checkUserExistence(context.getUser().getId());
-        Result resultPet = db.run(Select.from(pets)
-                .where(pets_ -> pets_.ID().eq(petId)));
-        if (!resultPet.first().isPresent()) {
-            throw new ServiceException("Pet not found or doesn't exist");
-        }
-
-        Pets pet = resultPet.first().get().as(Pets.class);
-
-        pet = attach(pet, user.getId());
+        Integer userId = context.getUser().getId();
+        Pets pet = attachUserToPet(petId, userId);
         context.setResult(pet);
     }
 
@@ -60,18 +48,7 @@ public class CatalogServiceHandler implements EventHandler {
         String type = context.getType();
         Integer userId = (Integer) analyzer.analyze(context.getCqn()).targetKeys().get("ID");
         Users user = checkUserExistence(userId);
-
-        Result resultPets = db.run(Select.from(pets)
-                .where(pet -> pet.type().eq(type))
-        .where(pet -> pet.user_ID().ne(userId)));
-
-        if (resultPets.list().isEmpty()) {
-            throw new ServiceException("Pets not found");
-        }
-        resultPets.stream()
-                .map(pet -> pet.as(Pets.class))
-                .forEach(pet -> attach(pet, userId));
-
+        attachUserToPets(type, userId);
         context.setResult(user);
     }
 
@@ -79,7 +56,6 @@ public class CatalogServiceHandler implements EventHandler {
         if (pet.getUserId().equals(userId)) {
             throw new ServiceException("Pet already attached to this user");
         }
-
         pet.setUserId(userId);
         pet = db.run(Update.entity(pets).data(pet)).single(Pets.class);
         return pet;
@@ -91,7 +67,32 @@ public class CatalogServiceHandler implements EventHandler {
         if (!resultUser.first().isPresent()) {
             throw new ServiceException("User not found or doesn't exist");
         }
-
         return resultUser.first().get().as(Users.class);
+    }
+
+    private void attachUserToPets(String type, Integer userId){
+        Result resultPets = db.run(Select.from(pets)
+                        .where(pet -> pet.type().eq(type)));
+
+        if (resultPets.list().isEmpty()) {
+            throw new ServiceException("Pets not found");
+        }
+
+        resultPets.stream()
+                .map(pet -> pet.as(Pets.class))
+                .filter(pet->!pet.getUserId().equals(userId))
+                .forEach(pet -> attach(pet, userId));
+    }
+
+    private Pets attachUserToPet(Integer petId, Integer userId) {
+        checkUserExistence(userId);
+        Result resultPet = db.run(Select.from(pets).where(pets_ -> pets_.ID().eq(petId)));
+
+        if (!resultPet.first().isPresent()) {
+            throw new ServiceException("Pet not found or doesn't exist");
+        }
+
+        Pets pet = resultPet.first().get().as(Pets.class);
+        return attach(pet, userId);
     }
 }
