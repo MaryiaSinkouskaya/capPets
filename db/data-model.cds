@@ -1,7 +1,6 @@
 namespace my.models;
 
 using {
-    my.models as my,
     managed,
     cuid
 } from '@sap/cds/common';
