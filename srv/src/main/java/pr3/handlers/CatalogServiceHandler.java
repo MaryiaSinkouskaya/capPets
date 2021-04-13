@@ -7,7 +7,6 @@ import cds.gen.catalogservice.Pets;
 import cds.gen.catalogservice.Pets_;
 import cds.gen.catalogservice.Users;
 import cds.gen.catalogservice.Users_;
-import com.sap.cds.Result;
 import com.sap.cds.services.handler.EventHandler;
 import com.sap.cds.services.handler.annotations.On;
 import com.sap.cds.services.handler.annotations.ServiceName;
@@ -15,6 +14,8 @@ import org.springframework.stereotype.Component;
 import pr3.service.PersistenceService;
 import pr3.utils.IdProvider;
 import pr3.validators.CatalogServiceValidator;
+
+import java.util.List;
 
 
 @Component
@@ -48,21 +49,16 @@ public class CatalogServiceHandler implements EventHandler {
     }
 
     private Users attachUserToPets(String type, Integer userId) {
-        Users user = catalogServiceValidator.checkUserExistence(userId);
-        Result resultPets = persistenceService.getTypedPets(type);
-        catalogServiceValidator.checkResultInstances(resultPets);
+        Users user = persistenceService.getUser(userId);
+        List<Pets> resultPets = persistenceService.getTypedPets(type);
         resultPets.stream()
-                .map(pet -> pet.as(Pets.class))
                 .filter(pet -> !pet.getUserId().equals(userId))
                 .forEach(pet -> attach(pet, userId));
         return user;
     }
 
     private Pets attachUserToPet(Integer petId, Integer userId) {
-        catalogServiceValidator.checkUserExistence(userId);
-        Result resultPet = persistenceService.getPet(petId);
-        catalogServiceValidator.checkResultInstance(resultPet);
-        Pets pet = resultPet.first().get().as(Pets.class);
+        Pets pet = persistenceService.getPet(petId);
         return attach(pet, userId);
     }
 

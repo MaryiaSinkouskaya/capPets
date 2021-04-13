@@ -14,7 +14,7 @@ public final class IdProvider {
         this.analyzer = CqnAnalyzer.create(model);
     }
 
-    public Integer getId(CqnSelect cqnSelect){
+    public Integer getId(CqnSelect cqnSelect) {
         return (Integer) analyzer.analyze(cqnSelect).targetKeys().get("ID");
     }
 }

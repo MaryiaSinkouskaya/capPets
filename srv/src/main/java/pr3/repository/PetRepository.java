@@ -16,15 +16,16 @@ public class PetRepository {
     public PetRepository(PersistenceService db) {
         this.db = db;
     }
-    public Result getPet(Integer petId){
+
+    public Result getPet(Integer petId) {
         return db.run(Select.from(Pets_.class).where(pets_ -> pets_.ID().eq(petId)));
     }
 
-    public Result getTypedPets(String type){
+    public Result getTypedPets(String type) {
         return db.run(Select.from(Pets_.class).where(pet -> pet.type().eq(type)));
     }
 
-    public Pets updatePet(Pets pet){
+    public Pets updatePet(Pets pet) {
         return db.run(Update.entity(Pets_.class).data(pet)).single(Pets.class);
     }
 

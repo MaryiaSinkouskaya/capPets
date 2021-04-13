@@ -15,7 +15,7 @@ public class UserRepository {
         this.db = db;
     }
 
-    public Result getUser(Integer userId){
+    public Result getUser(Integer userId) {
         return db.run(Select.from(Users_.class).where(user_ -> user_.ID().eq(userId)));
     }
 }
