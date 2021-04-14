@@ -11,7 +11,8 @@ import com.sap.cds.services.handler.EventHandler;
 import com.sap.cds.services.handler.annotations.On;
 import com.sap.cds.services.handler.annotations.ServiceName;
 import org.springframework.stereotype.Component;
-import pr3.service.PersistenceService;
+import pr3.service.PetService;
+import pr3.service.UserService;
 import pr3.utils.IdProvider;
 import pr3.validators.CatalogServiceValidator;
 
@@ -22,12 +23,14 @@ import java.util.List;
 @ServiceName(CatalogService_.CDS_NAME)
 public class CatalogServiceHandler implements EventHandler {
 
-    private final PersistenceService persistenceService;
+    private final PetService petService;
+    private final UserService userService;
     private final IdProvider idProvider;
     private final CatalogServiceValidator catalogServiceValidator;
 
-    public CatalogServiceHandler(PersistenceService persistenceService, IdProvider idProvider, CatalogServiceValidator catalogServiceValidator) {
-        this.persistenceService = persistenceService;
+    public CatalogServiceHandler(PetService petService, UserService userService, IdProvider idProvider, CatalogServiceValidator catalogServiceValidator) {
+        this.petService = petService;
+        this.userService = userService;
         this.idProvider = idProvider;
         this.catalogServiceValidator = catalogServiceValidator;
     }
@@ -49,23 +52,21 @@ public class CatalogServiceHandler implements EventHandler {
     }
 
     private Users attachUserToPets(String type, Integer userId) {
-        Users user = persistenceService.getUser(userId);
-        List<Pets> resultPets = persistenceService.getTypedPets(type);
-        resultPets.stream()
-                .filter(pet -> !pet.getUserId().equals(userId))
-                .forEach(pet -> attach(pet, userId));
+        Users user = userService.getUser(userId);
+        List<Pets> resultPets = petService.getStrangersTypedPets(type, userId);
+        resultPets.forEach(pet -> attach(pet, userId));
         return user;
     }
 
     private Pets attachUserToPet(Integer petId, Integer userId) {
-        Pets pet = persistenceService.getPet(petId);
+        Pets pet = petService.getPet(petId);
         return attach(pet, userId);
     }
 
     private Pets attach(Pets pet, Integer userId) {
         catalogServiceValidator.checkAttaching(pet.getUserId(), userId);
         pet.setUserId(userId);
-        pet = persistenceService.updatePet(pet);
+        pet = petService.updatePet(pet);
         return pet;
     }
 
