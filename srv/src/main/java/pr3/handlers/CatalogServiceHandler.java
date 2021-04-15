@@ -10,30 +10,24 @@ import cds.gen.catalogservice.Users_;
 import com.sap.cds.services.handler.EventHandler;
 import com.sap.cds.services.handler.annotations.On;
 import com.sap.cds.services.handler.annotations.ServiceName;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import pr3.provider.IdProvider;
 import pr3.service.PetService;
 import pr3.service.UserService;
-import pr3.utils.IdProvider;
 import pr3.validators.CatalogServiceValidator;
 
 import java.util.List;
 
-
 @Component
 @ServiceName(CatalogService_.CDS_NAME)
+@RequiredArgsConstructor
 public class CatalogServiceHandler implements EventHandler {
 
     private final PetService petService;
     private final UserService userService;
     private final IdProvider idProvider;
     private final CatalogServiceValidator catalogServiceValidator;
-
-    public CatalogServiceHandler(PetService petService, UserService userService, IdProvider idProvider, CatalogServiceValidator catalogServiceValidator) {
-        this.petService = petService;
-        this.userService = userService;
-        this.idProvider = idProvider;
-        this.catalogServiceValidator = catalogServiceValidator;
-    }
 
     @On(entity = Pets_.CDS_NAME)
     public void onChangeUser(ChangeUserContext context) {

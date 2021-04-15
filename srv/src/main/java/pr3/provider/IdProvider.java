@@ -1,4 +1,4 @@
-package pr3.utils;
+package pr3.provider;
 
 import com.sap.cds.ql.cqn.CqnAnalyzer;
 import com.sap.cds.ql.cqn.CqnSelect;
@@ -6,7 +6,7 @@ import com.sap.cds.reflect.CdsModel;
 import org.springframework.stereotype.Component;
 
 @Component
-public final class IdProvider {
+public class IdProvider {
 
     private final CqnAnalyzer analyzer;
 
