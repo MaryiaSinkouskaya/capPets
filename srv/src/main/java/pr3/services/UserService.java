@@ -1,4 +1,4 @@
-package pr3.service;
+package pr3.services;
 
 import cds.gen.catalogservice.Users;
 import com.sap.cds.services.ServiceException;

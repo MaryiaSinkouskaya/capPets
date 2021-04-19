@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import pr3.repository.UserRepository;
-import pr3.service.UserService;
 
 import java.util.Optional;
 
@@ -34,22 +33,18 @@ public class UserServiceTest {
         Users user = createUser();
         when(userRepository.getUser(user.getId()))
                 .thenReturn(Optional.of(user));
-        Users user1 = userService.getUser(user.getId());
+        Users receivedUser = userService.getUser(user.getId());
 
-        assertEquals(user1.getId(), user.getId());
+        assertEquals(receivedUser.getId(), user.getId());
     }
 
-    @Test
+    @Test(expected = ServiceException.class)
     public void getUser_GivenUserId_ShouldThrowException() {
-        Integer invalidId = invalidId();
         Users user = createUser();
+        Integer invalidId = invalidId();
         user.setId(invalidId);
         when(userRepository.getUser(invalidId))
                 .thenThrow(new ServiceException("User not found or doesn't exist"));
-        try {
-            userService.getUser(invalidId);
-        } catch (ServiceException e) {
-            assertEquals(e.getMessage(), "User not found or doesn't exist");
-        }
+        userService.getUser(invalidId);
     }
 }

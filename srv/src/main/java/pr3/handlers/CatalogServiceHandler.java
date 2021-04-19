@@ -1,4 +1,4 @@
-package pr3.services;
+package pr3.handlers;
 
 import cds.gen.catalogservice.AttachUserContext;
 import cds.gen.catalogservice.CatalogService_;
@@ -13,8 +13,8 @@ import com.sap.cds.services.handler.annotations.ServiceName;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import pr3.provider.IdProvider;
-import pr3.service.PetService;
-import pr3.service.UserService;
+import pr3.services.PetService;
+import pr3.services.UserService;
 import pr3.validators.CatalogServiceValidator;
 
 import java.util.List;
@@ -63,5 +63,4 @@ public class CatalogServiceHandler implements EventHandler {
         pet = petService.updatePet(pet);
         return pet;
     }
-
 }

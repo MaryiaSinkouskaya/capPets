@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import pr3.repository.PetRepository;
-import pr3.service.PetService;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,12 +32,13 @@ public class PetServiceTest {
 
     @Test
     public void getPet_GivenPetId_ShouldReturnPet() {
-        Pets pet = createPet("CAT");
+        String type = "CAT";
+        Pets pet = createPet(type);
         when(petRepository.getPet(pet.getId()))
                 .thenReturn(Optional.of(pet));
-        Pets pet1 = petService.getPet(pet.getId());
+        Pets receivedPet = petService.getPet(pet.getId());
 
-        assertEquals(pet1.getId(), pet.getId());
+        assertEquals(receivedPet.getId(), pet.getId());
     }
 
 
@@ -52,7 +52,6 @@ public class PetServiceTest {
         List<Pets> receivedPets = petService.getStrangersTypedPets(type, userId);
         assertFalse(receivedPets.isEmpty());
     }
-
 
     @Test
     public void updatePet_GivenPet_ShouldReturnPet() {
