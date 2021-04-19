@@ -1,4 +1,4 @@
-package pr3.handlers;
+package pr3.services;
 
 import cds.gen.catalogservice.AttachUserContext;
 import cds.gen.catalogservice.CatalogService_;

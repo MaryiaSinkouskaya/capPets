@@ -17,6 +17,5 @@ public class UserService {
     public Users getUser(Integer userId) {
         Optional<Users> user = userRepository.getUser(userId);
         return user.orElseThrow(() -> new ServiceException("User not found or doesn't exist"));
-
     }
 }
