@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+import static java.util.Optional.empty;
 import static java.util.Optional.ofNullable;
 
 @Repository
@@ -25,8 +26,8 @@ public class UserRepository {
         try {
             Users receivedUser = db.run(select).single(Users.class);
             return ofNullable(receivedUser);
-        }catch (EmptyResultException emptyResultException){
-            return Optional.empty();
+        } catch (EmptyResultException e) {
+            return empty();
         }
     }
 }

@@ -51,7 +51,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void getUser_GivenUserId_ShouldThrowEmptyResultException() {
+    public void getUser_GivenUserId_ShouldReturnOptionalEmpty() {
         Users user = createUser();
         Result result = create().result();
 
