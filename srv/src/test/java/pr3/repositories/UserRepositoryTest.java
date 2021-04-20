@@ -16,6 +16,7 @@ import static com.sap.cds.impl.ResultImpl.create;
 import static com.sap.cds.impl.ResultImpl.insertedRows;
 import static java.util.Collections.singletonList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -49,15 +50,15 @@ public class UserRepositoryTest {
         assertEquals(receivedId, user.getId());
     }
 
-    @Test(expected = EmptyResultException.class)
-    public void getUser_GivenUserId_ShouldReturnOptionalEmpty() {
+    @Test
+    public void getUser_GivenUserId_ShouldThrowEmptyResultException() {
         Users user = createUser();
         Result result = create().result();
 
         Select anySelect = any(Select.class);
         when(db.run(anySelect)).thenReturn(result);
 
-        userRepository.getUser(user.getId());
+        Optional<Users> receivedUser = userRepository.getUser(user.getId());
+        assertFalse(receivedUser.isPresent());
     }
-
 }
