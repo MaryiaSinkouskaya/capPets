@@ -1,4 +1,4 @@
-package pr3.repository;
+package pr3.repositories;
 
 import cds.gen.catalogservice.Users;
 import cds.gen.catalogservice.Users_;

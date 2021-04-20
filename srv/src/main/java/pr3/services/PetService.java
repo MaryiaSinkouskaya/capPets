@@ -4,7 +4,7 @@ import cds.gen.catalogservice.Pets;
 import com.sap.cds.services.ServiceException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pr3.repository.PetRepository;
+import pr3.repositories.PetRepository;
 
 import java.util.List;
 import java.util.Optional;

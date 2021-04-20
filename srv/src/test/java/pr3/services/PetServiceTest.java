@@ -4,7 +4,7 @@ import cds.gen.catalogservice.Pets;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import pr3.repository.PetRepository;
+import pr3.repositories.PetRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +24,8 @@ public class PetServiceTest {
 
     private PetService petService;
 
+    private final String catType = "CAT";
+
     @Before
     public void setUp() {
         initMocks(this);
@@ -32,8 +34,7 @@ public class PetServiceTest {
 
     @Test
     public void getPet_GivenPetId_ShouldReturnPet() {
-        String type = "CAT";
-        Pets pet = createPet(type);
+        Pets pet = createPet(catType);
         when(petRepository.getPet(pet.getId()))
                 .thenReturn(Optional.of(pet));
         Pets receivedPet = petService.getPet(pet.getId());
@@ -41,21 +42,19 @@ public class PetServiceTest {
         assertEquals(receivedPet.getId(), pet.getId());
     }
 
-
     @Test
     public void getStrangersTypedPets_GivenPetTypeAndUserId_ShouldReturnPets() {
         List<Pets> pets = createPets();
-        String type = "CAT";
         Integer userId = validId();
-        when(petRepository.getStrangersTypedPets(type, userId))
+        when(petRepository.getStrangersTypedPets(catType, userId))
                 .thenReturn(pets);
-        List<Pets> receivedPets = petService.getStrangersTypedPets(type, userId);
+        List<Pets> receivedPets = petService.getStrangersTypedPets(catType, userId);
         assertFalse(receivedPets.isEmpty());
     }
 
     @Test
     public void updatePet_GivenPet_ShouldReturnPet() {
-        Pets pet = createPet("CAT");
+        Pets pet = createPet(catType);
         when(petRepository.updatePet(pet))
                 .thenReturn(pet);
         Pets updatedPet = petService.updatePet(pet);

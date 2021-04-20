@@ -4,7 +4,7 @@ import cds.gen.catalogservice.Users;
 import com.sap.cds.services.ServiceException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pr3.repository.UserRepository;
+import pr3.repositories.UserRepository;
 
 import java.util.Optional;
 
