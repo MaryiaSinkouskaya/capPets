@@ -1,7 +1,6 @@
 package pr3.repositories;
 
 import cds.gen.catalogservice.Users;
-import com.sap.cds.EmptyResultException;
 import com.sap.cds.Result;
 import com.sap.cds.ql.Select;
 import com.sap.cds.services.ServiceException;

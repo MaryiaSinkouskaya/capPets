@@ -8,8 +8,8 @@ import static com.sap.cds.services.ErrorStatuses.BAD_REQUEST;
 @Component
 public class CatalogServiceValidator {
 
-    public void checkAttaching(Integer petId, Integer userId) {
-        if (petId.equals(userId)) {
+    public void checkAttaching(Integer petUserId, Integer userId) {
+        if (petUserId.equals(userId)) {
             throw new ServiceException(BAD_REQUEST, "Pet already attached to this user");
         }
     }

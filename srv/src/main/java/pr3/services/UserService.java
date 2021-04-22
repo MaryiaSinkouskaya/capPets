@@ -8,6 +8,8 @@ import pr3.repositories.UserRepository;
 
 import java.util.Optional;
 
+import static com.sap.cds.services.ErrorStatuses.NOT_FOUND;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -16,6 +18,6 @@ public class UserService {
 
     public Users getUser(Integer userId) {
         Optional<Users> user = userRepository.getUser(userId);
-        return user.orElseThrow(() -> new ServiceException("User not found or doesn't exist"));
+        return user.orElseThrow(() -> new ServiceException(NOT_FOUND, "User not found or doesn't exist"));
     }
 }
