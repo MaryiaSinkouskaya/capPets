@@ -36,28 +36,32 @@ public class UserRepositoryTest {
 
     @Test
     public void getUser_GivenUserId_ShouldReturnCertainUser() {
+        //Given
         Users user = createUser();
         Result result = insertedRows(singletonList(user)).result();
 
         Select anySelect = any(Select.class);
         when(db.run(anySelect)).thenReturn(result);
-
+        //When
         Optional<Users> receivedUser = userRepository.getUser(user.getId());
         Integer receivedId = receivedUser
                 .orElseThrow(() -> new ServiceException("User not found or doesn't exist"))
                 .getId();
+        //Then
         assertEquals(receivedId, user.getId());
     }
 
     @Test
     public void getUser_GivenUserId_ShouldReturnOptionalEmpty() {
+        //Given
         Users user = createUser();
         Result result = create().result();
 
         Select anySelect = any(Select.class);
         when(db.run(anySelect)).thenReturn(result);
-
+        //When
         Optional<Users> receivedUser = userRepository.getUser(user.getId());
+        //Then
         assertFalse(receivedUser.isPresent());
     }
 }

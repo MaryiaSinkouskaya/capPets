@@ -18,7 +18,6 @@ import java.util.List;
 import static cds.gen.catalogservice.ChangeUserContext.create;
 import static cds.gen.catalogservice.Users_.CDS_NAME;
 import static com.sap.cds.ql.impl.SelectBuilder.from;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
@@ -55,6 +54,7 @@ public class CatalogServiceHandlerTest {
 
     @Test
     public void onChangeUser_GivenContext_ShouldAttachUserToRequiredPet() {
+        //Given
         Users user = createUser();
         Integer userId = user.getId();
 
@@ -66,14 +66,14 @@ public class CatalogServiceHandlerTest {
         context.setUser(user);
         context.setCqn(from(CDS_NAME).asSelect());
 
-        when(idProvider.getId(any())).thenReturn(petId);
+        when(idProvider.getId(any(CqnSelect.class))).thenReturn(petId);
         when(petService.getPet(petId)).thenReturn(pet);
         doNothing().when(catalogServiceValidator).checkAttaching(pet.getUserId(), userId);
         pet.setUserId(userId);
         when(petService.updatePet(pet)).thenReturn(pet);
-
+        //When
         catalogServiceHandler.onChangeUser(context);
-
+        //Then
         verify(petService, times(1)).updatePet(pet);
         verify(petService, times(1)).getPet(petId);
         verify(idProvider, times(1)).getId(any(CqnSelect.class));
@@ -81,26 +81,28 @@ public class CatalogServiceHandlerTest {
 
     @Test
     public void onAttachUser_GivenContext_ShouldAttachUserToRequiredTypeOfPets() {
+        //Given
         Users user = createUser();
+        String type = "CAT";
         List<Pets> pets = createPets();
-        Pets updatedPet = createPet("CAT");
-        pets.forEach(pet -> pet.setType("CAT"));
+        Pets updatedPet = createPet(type);
+        pets.forEach(pet -> pet.setType(type));
 
         AttachUserContext context = AttachUserContext.create();
-        context.setType("CAT");
+        context.setType(type);
         context.setCqn(from(CDS_NAME).asSelect());
 
-        when(idProvider.getId(any())).thenReturn(user.getId());
+        when(idProvider.getId(any(CqnSelect.class))).thenReturn(user.getId());
         when(userService.getUser(user.getId())).thenReturn(user);
-        when(petService.getStrangersTypedPets("CAT", user.getId())).thenReturn(pets);
+        when(petService.getStrangersTypedPets(type, user.getId())).thenReturn(pets);
         doNothing().when(catalogServiceValidator).checkAttaching(any(Integer.class), any(Integer.class));
         when(petService.updatePet(any(Pets.class))).thenReturn(updatedPet);
-
+        //When
         catalogServiceHandler.onAttachUser(context);
-
+        //Then
         verify(idProvider, times(1)).getId(any());
         verify(userService, times(1)).getUser(user.getId());
-        verify(petService, times(1)).getStrangersTypedPets("CAT", user.getId());
+        verify(petService, times(1)).getStrangersTypedPets(type, user.getId());
         verify(petService, times(pets.size())).updatePet(any(Pets.class));
     }
 }

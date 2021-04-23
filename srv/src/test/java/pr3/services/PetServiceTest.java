@@ -34,30 +34,37 @@ public class PetServiceTest {
 
     @Test
     public void getPet_GivenPetId_ShouldReturnPet() {
+        //Given
         Pets pet = createPet(catType);
         when(petRepository.getPet(pet.getId()))
                 .thenReturn(Optional.of(pet));
+        //When
         Pets receivedPet = petService.getPet(pet.getId());
-
+        //Then
         assertEquals(receivedPet.getId(), pet.getId());
     }
 
     @Test
     public void getStrangersTypedPets_GivenPetTypeAndUserId_ShouldReturnPets() {
+        //Given
         List<Pets> pets = createPets();
         Integer userId = validId();
-        when(petRepository.getStrangersTypedPets(catType, userId))
-                .thenReturn(pets);
+        when(petRepository.getStrangersTypedPets(catType, userId)).thenReturn(pets);
+        //When
         List<Pets> receivedPets = petService.getStrangersTypedPets(catType, userId);
+        //Then
         assertFalse(receivedPets.isEmpty());
     }
 
     @Test
     public void updatePet_GivenPet_ShouldReturnPet() {
+        //Given
         Pets pet = createPet(catType);
         when(petRepository.updatePet(pet))
                 .thenReturn(pet);
+        //When
         Pets updatedPet = petService.updatePet(pet);
+        //Then
         assertEquals(updatedPet.getId(), pet.getId());
     }
 }

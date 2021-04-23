@@ -58,6 +58,7 @@ public class CatalogServiceHandler implements EventHandler {
     }
 
     private Pets attach(Pets pet, Integer userId) {
+        catalogServiceValidator.checkUserExistence(userId);
         catalogServiceValidator.checkAttaching(pet.getUserId(), userId);
         pet.setUserId(userId);
         pet = petService.updatePet(pet);

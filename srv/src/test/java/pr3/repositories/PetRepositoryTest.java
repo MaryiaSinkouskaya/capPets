@@ -45,80 +45,88 @@ public class PetRepositoryTest {
 
     @Test
     public void getPet_GivenPetId_ShouldReturnCertainPet() {
+        //Given
         Pets pet = createPet("CAT");
         Result result = insertedRows(singletonList(pet)).result();
 
         Select anySelect = any(Select.class);
         when(db.run(anySelect)).thenReturn(result);
-
+        //When
         Optional<Pets> receivedPet = petRepository.getPet(pet.getId());
         Integer receivedId = receivedPet
                 .orElseThrow(() -> new ServiceException("Pet not found or doesn't exist"))
                 .getId();
+        //Then
         assertEquals(receivedId, pet.getId());
     }
 
     @Test
     public void getPet_GivenPetId_ShouldReturnOptionalEmpty() {
+        //Given
         Pets pet = createPet("CAT");
         Result result = create().result();
 
         Select anySelect = any(Select.class);
         when(db.run(anySelect)).thenReturn(result);
-
+        //When
         Optional<Pets> receivedPet = petRepository.getPet(pet.getId());
+        //Then
         assertFalse(receivedPet.isPresent());
     }
 
     @Test
     public void getStrangersTypedPets_GivenPetTypeAndUserId_ShouldReturnPets() {
+        //Given
         List<Pets> pets = createPets();
         Integer userId = validId();
         Result result = insertedRows(pets).result();
 
         Select anySelect = any(Select.class);
         when(db.run(anySelect)).thenReturn(result);
-
+        //When
         List<Pets> resultPets = petRepository.getStrangersTypedPets("CAT", userId);
-
+        //Then
         assertFalse(resultPets.isEmpty());
     }
 
     @Test
     public void getStrangersTypedPets_GivenUnknownPetTypeAndUserId_ShouldReturnEmptyList() {
+        //Given
         Integer userId = validId();
         Result result = insertedRows(emptyList()).result();
 
         Select anySelect = any(Select.class);
         when(db.run(anySelect)).thenReturn(result);
-
+        //When
         List<Pets> resultPets = petRepository.getStrangersTypedPets("UNKNOWN_TYPE", userId);
-
+        //Then
         assertTrue(resultPets.isEmpty());
     }
 
     @Test
     public void getStrangersTypedPets_GivenPetTypeAndInvalidUserId_ShouldReturnEmptyList() {
+        //Given
         Integer userId = invalidId();
         Result result = insertedRows(emptyList()).result();
 
         Select anySelect = any(Select.class);
         when(db.run(anySelect)).thenReturn(result);
-
+        //When
         List<Pets> resultPets = petRepository.getStrangersTypedPets("CAT", userId);
-
+        //Then
         assertTrue(resultPets.isEmpty());
     }
 
     @Test
     public void updatePet_GivenPet_ShouldReturnPet() {
+        //Given
         Pets pet = createPet("CAT");
         Result result = insertedRows(singletonList(pet)).result();
 
         when(db.run(any(CqnUpdate.class))).thenReturn(result);
-
+        //When
         Pets receivedPet = petRepository.updatePet(pet);
-
+        //Then
         assertEquals(receivedPet, pet);
     }
 
