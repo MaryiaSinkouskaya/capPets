@@ -4,8 +4,6 @@ import cds.gen.catalogservice.Pets;
 import com.sap.cds.services.ServiceException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
-import pr3.repositories.UserRepository;
 import pr3.services.UserService;
 
 import java.util.List;
@@ -26,12 +24,12 @@ public class CatalogServiceValidator {
     }
 
     public void checkPetsExistence(List<Pets> pets, String type) {
-        if(pets.isEmpty()){
+        if (pets.isEmpty()) {
             throw new ServiceException(NOT_FOUND, type + " Pets not found, already attached or such type doesn't exist");
         }
     }
 
-    public void checkUserExistence(Integer userId){
+    public void checkUserExistence(Integer userId) {
         userService.getUser(userId);
     }
 }

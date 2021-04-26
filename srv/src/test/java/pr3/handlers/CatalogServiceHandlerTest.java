@@ -14,13 +14,12 @@ import pr3.services.PetService;
 import pr3.services.UserService;
 import pr3.validators.CatalogServiceValidator;
 
-import java.util.Collections;
 import java.util.List;
 
 import static cds.gen.catalogservice.ChangeUserContext.create;
 import static cds.gen.catalogservice.Users_.CDS_NAME;
 import static com.sap.cds.ql.impl.SelectBuilder.from;
-import static java.util.Collections.*;
+import static java.util.Collections.emptyList;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;

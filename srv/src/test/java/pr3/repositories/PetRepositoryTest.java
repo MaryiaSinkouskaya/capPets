@@ -1,10 +1,8 @@
 package pr3.repositories;
 
 import cds.gen.catalogservice.Pets;
-import cds.gen.catalogservice.Pets_;
 import com.sap.cds.Result;
 import com.sap.cds.ql.Select;
-import com.sap.cds.ql.Update;
 import com.sap.cds.ql.cqn.CqnUpdate;
 import com.sap.cds.services.ServiceException;
 import com.sap.cds.services.persistence.PersistenceService;

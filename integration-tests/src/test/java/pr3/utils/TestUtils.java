@@ -19,7 +19,7 @@ public class TestUtils {
         return (int) (-random());
     }
 
-    public static UserDto wrapUserIdByDto(Integer userId){
+    public static UserDto wrapUserIdByDto(Integer userId) {
         Users user = Users.create();
         user.setId(userId);
         return builder().user(user).build();
