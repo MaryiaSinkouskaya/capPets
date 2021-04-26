@@ -5,9 +5,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import pr3.services.UserService;
+import pr3.utils.TestUtils;
 
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
+import static pr3.utils.TestUtils.*;
 
 public class CatalogServiceValidatorTest {
 
@@ -25,16 +27,15 @@ public class CatalogServiceValidatorTest {
     @Test(expected = ServiceException.class)
     public void checkAttaching_SameGivenPetUserIdAndUserId_ShouldThrowServiceException(){
         //Given
-        Integer petUserId = 1;
-        Integer userId = petUserId;
+        Integer id = validId();
         //When
-        catalogServiceValidator.checkAttaching(petUserId, userId);
+        catalogServiceValidator.checkAttaching(id, id);
     }
 
     @Test(expected = ServiceException.class)
     public void checkUserExistence_GivenUserId_ShouldThrowServiceException(){
         //Given
-        Integer userId = 1;
+        Integer userId = validId();
         when(userService.getUser(userId)).thenThrow(ServiceException.class);
         //When
         catalogServiceValidator.checkUserExistence(userId);

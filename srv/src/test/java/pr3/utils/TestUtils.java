@@ -10,6 +10,8 @@ import static java.util.Arrays.asList;
 
 public class TestUtils {
 
+    public static final String CAT = "CAT";
+
     public static Integer invalidId() {
         return (int) (-random());
     }

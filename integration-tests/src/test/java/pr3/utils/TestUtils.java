@@ -9,6 +9,9 @@ import static pr3.dto.UserDto.builder;
 public class TestUtils {
 
     public static final String CAT = "CAT";
+    public static final String URL_ODATA_V4_CS = "/odata/v4/CatalogService/";
+    public static final String URL_CS_CHANGE_USER = "/CatalogService.changeUser";
+    public static final String URL_CS_ATTACH_USER = "/CatalogService.attachUser";
 
     public static final Integer VALID_ID = 2;
 

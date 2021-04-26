@@ -25,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
+import static pr3.utils.TestUtils.CAT;
 import static pr3.utils.TestUtils.createPet;
 import static pr3.utils.TestUtils.createPets;
 import static pr3.utils.TestUtils.invalidId;
@@ -46,7 +47,7 @@ public class PetRepositoryTest {
     @Test
     public void getPet_GivenPetId_ShouldReturnCertainPet() {
         //Given
-        Pets pet = createPet("CAT");
+        Pets pet = createPet(CAT);
         Result result = insertedRows(singletonList(pet)).result();
 
         Select anySelect = any(Select.class);
@@ -63,7 +64,7 @@ public class PetRepositoryTest {
     @Test
     public void getPet_GivenPetId_ShouldReturnOptionalEmpty() {
         //Given
-        Pets pet = createPet("CAT");
+        Pets pet = createPet(CAT);
         Result result = create().result();
 
         Select anySelect = any(Select.class);
@@ -84,7 +85,7 @@ public class PetRepositoryTest {
         Select anySelect = any(Select.class);
         when(db.run(anySelect)).thenReturn(result);
         //When
-        List<Pets> resultPets = petRepository.getStrangersTypedPets("CAT", userId);
+        List<Pets> resultPets = petRepository.getStrangersTypedPets(CAT, userId);
         //Then
         assertFalse(resultPets.isEmpty());
     }
@@ -112,7 +113,7 @@ public class PetRepositoryTest {
         Select anySelect = any(Select.class);
         when(db.run(anySelect)).thenReturn(result);
         //When
-        List<Pets> resultPets = petRepository.getStrangersTypedPets("CAT", userId);
+        List<Pets> resultPets = petRepository.getStrangersTypedPets(CAT, userId);
         //Then
         assertTrue(resultPets.isEmpty());
     }
@@ -120,7 +121,7 @@ public class PetRepositoryTest {
     @Test
     public void updatePet_GivenPet_ShouldReturnPet() {
         //Given
-        Pets pet = createPet("CAT");
+        Pets pet = createPet(CAT);
         Result result = insertedRows(singletonList(pet)).result();
 
         when(db.run(any(CqnUpdate.class))).thenReturn(result);

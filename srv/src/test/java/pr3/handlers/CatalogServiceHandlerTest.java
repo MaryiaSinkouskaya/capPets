@@ -24,6 +24,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
+import static pr3.utils.TestUtils.CAT;
 import static pr3.utils.TestUtils.createPet;
 import static pr3.utils.TestUtils.createPets;
 import static pr3.utils.TestUtils.createUser;
@@ -58,7 +59,7 @@ public class CatalogServiceHandlerTest {
         Users user = createUser();
         Integer userId = user.getId();
 
-        Pets pet = createPet("CAT");
+        Pets pet = createPet(CAT);
         pet.setUserId(validId());
         Integer petId = pet.getId();
 
@@ -83,7 +84,7 @@ public class CatalogServiceHandlerTest {
     public void onAttachUser_GivenContext_ShouldAttachUserToRequiredTypeOfPets() {
         //Given
         Users user = createUser();
-        String type = "CAT";
+        String type = CAT;
         List<Pets> pets = createPets();
         Pets updatedPet = createPet(type);
         pets.forEach(pet -> pet.setType(type));

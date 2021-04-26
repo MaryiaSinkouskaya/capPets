@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
+import static pr3.utils.TestUtils.CAT;
 import static pr3.utils.TestUtils.createPet;
 import static pr3.utils.TestUtils.createPets;
 import static pr3.utils.TestUtils.validId;
@@ -24,7 +25,6 @@ public class PetServiceTest {
 
     private PetService petService;
 
-    private final String catType = "CAT";
 
     @Before
     public void setUp() {
@@ -35,7 +35,7 @@ public class PetServiceTest {
     @Test
     public void getPet_GivenPetId_ShouldReturnPet() {
         //Given
-        Pets pet = createPet(catType);
+        Pets pet = createPet(CAT);
         when(petRepository.getPet(pet.getId()))
                 .thenReturn(Optional.of(pet));
         //When
@@ -49,9 +49,9 @@ public class PetServiceTest {
         //Given
         List<Pets> pets = createPets();
         Integer userId = validId();
-        when(petRepository.getStrangersTypedPets(catType, userId)).thenReturn(pets);
+        when(petRepository.getStrangersTypedPets(CAT, userId)).thenReturn(pets);
         //When
-        List<Pets> receivedPets = petService.getStrangersTypedPets(catType, userId);
+        List<Pets> receivedPets = petService.getStrangersTypedPets(CAT, userId);
         //Then
         assertFalse(receivedPets.isEmpty());
     }
@@ -59,7 +59,7 @@ public class PetServiceTest {
     @Test
     public void updatePet_GivenPet_ShouldReturnPet() {
         //Given
-        Pets pet = createPet(catType);
+        Pets pet = createPet(CAT);
         when(petRepository.updatePet(pet))
                 .thenReturn(pet);
         //When
