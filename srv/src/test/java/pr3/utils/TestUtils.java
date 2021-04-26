@@ -3,11 +3,9 @@ package pr3.utils;
 import cds.gen.catalogservice.Pets;
 import cds.gen.catalogservice.Users;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static java.lang.Math.random;
-import static java.util.Arrays.*;
 import static java.util.Arrays.asList;
 
 public class TestUtils {
@@ -28,7 +26,7 @@ public class TestUtils {
         return user;
     }
 
-    public static List<Users> createUsers(){
+    public static List<Users> createUsers() {
         return asList(
                 createUser(),
                 createUser(),

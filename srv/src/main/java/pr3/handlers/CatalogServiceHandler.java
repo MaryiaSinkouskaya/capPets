@@ -7,7 +7,6 @@ import cds.gen.catalogservice.Pets;
 import cds.gen.catalogservice.Pets_;
 import cds.gen.catalogservice.Users;
 import cds.gen.catalogservice.Users_;
-import com.sap.cds.services.ServiceException;
 import com.sap.cds.services.handler.EventHandler;
 import com.sap.cds.services.handler.annotations.On;
 import com.sap.cds.services.handler.annotations.ServiceName;
@@ -19,9 +18,6 @@ import pr3.services.UserService;
 import pr3.validators.CatalogServiceValidator;
 
 import java.util.List;
-
-import static com.sap.cds.services.ErrorStatuses.BAD_REQUEST;
-import static com.sap.cds.services.ErrorStatuses.NOT_FOUND;
 
 @Component
 @ServiceName(CatalogService_.CDS_NAME)
