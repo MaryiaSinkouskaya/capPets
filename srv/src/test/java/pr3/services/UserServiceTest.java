@@ -41,7 +41,7 @@ public class UserServiceTest {
     }
 
     @Test(expected = ServiceException.class)
-    public void getUser_GivenUserId_ShouldThrowException() {
+    public void getUser_GivenInvalidUserId_ShouldThrowException() {
         //Given
         Users user = createUser();
         Integer invalidId = invalidId();
