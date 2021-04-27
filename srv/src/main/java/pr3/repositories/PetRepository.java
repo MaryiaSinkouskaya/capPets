@@ -34,7 +34,7 @@ public class PetRepository {
         }
     }
 
-    public List<Pets> getStrangersTypedPets(String type, Integer userId) {
+    public List<Pets> getPetsByTypeForUser(String type, Integer userId) {
         Select<Pets_> select = Select.from(Pets_.class)
                 .where(pet -> pet
                         .type().eq(type)

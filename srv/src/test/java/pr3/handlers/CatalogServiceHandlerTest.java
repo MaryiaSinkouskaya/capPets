@@ -26,7 +26,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.mockito.MockitoAnnotations.openMocks;
 import static pr3.utils.TestUtils.CAT;
 import static pr3.utils.TestUtils.createPet;
 import static pr3.utils.TestUtils.createPets;
@@ -52,7 +52,7 @@ public class CatalogServiceHandlerTest {
 
     @Before
     public void setUp() {
-        initMocks(this);
+        openMocks(this);
         catalogServiceHandler =
                 new CatalogServiceHandler(petService, userService, idProvider, catalogServiceValidator);
     }

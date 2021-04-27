@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.mockito.MockitoAnnotations.openMocks;
 import static pr3.utils.TestUtils.CAT;
 import static pr3.utils.TestUtils.createPet;
 import static pr3.utils.TestUtils.createPets;
@@ -38,7 +38,7 @@ public class PetRepositoryTest {
 
     @Before
     public void setUp() {
-        initMocks(this);
+        openMocks(this);
         petRepository = new PetRepository(db);
     }
 
@@ -83,7 +83,7 @@ public class PetRepositoryTest {
         Select anySelect = any(Select.class);
         when(db.run(anySelect)).thenReturn(result);
         //When
-        List<Pets> resultPets = petRepository.getStrangersTypedPets(CAT, userId);
+        List<Pets> resultPets = petRepository.getPetsByTypeForUser(CAT, userId);
         //Then
         assertFalse(resultPets.isEmpty());
     }
@@ -97,7 +97,7 @@ public class PetRepositoryTest {
         Select anySelect = any(Select.class);
         when(db.run(anySelect)).thenReturn(result);
         //When
-        List<Pets> resultPets = petRepository.getStrangersTypedPets("UNKNOWN_TYPE", userId);
+        List<Pets> resultPets = petRepository.getPetsByTypeForUser("UNKNOWN_TYPE", userId);
         //Then
         assertTrue(resultPets.isEmpty());
     }
@@ -111,7 +111,7 @@ public class PetRepositoryTest {
         Select anySelect = any(Select.class);
         when(db.run(anySelect)).thenReturn(result);
         //When
-        List<Pets> resultPets = petRepository.getStrangersTypedPets(CAT, userId);
+        List<Pets> resultPets = petRepository.getPetsByTypeForUser(CAT, userId);
         //Then
         assertTrue(resultPets.isEmpty());
     }

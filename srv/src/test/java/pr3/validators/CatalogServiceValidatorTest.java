@@ -7,7 +7,7 @@ import org.mockito.Mock;
 import pr3.services.UserService;
 
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.mockito.MockitoAnnotations.openMocks;
 import static pr3.utils.TestUtils.validId;
 
 public class CatalogServiceValidatorTest {
@@ -19,7 +19,7 @@ public class CatalogServiceValidatorTest {
 
     @Before
     public void setUp() {
-        initMocks(this);
+        openMocks(this);
         catalogServiceValidator = new CatalogServiceValidator(userService);
     }
 

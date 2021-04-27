@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.mockito.MockitoAnnotations.openMocks;
 import static pr3.utils.TestUtils.createUser;
 
 public class UserRepositoryTest {
@@ -30,7 +30,7 @@ public class UserRepositoryTest {
 
     @Before
     public void setUp() {
-        initMocks(this);
+        openMocks(this);
         userRepository = new UserRepository(db);
     }
 

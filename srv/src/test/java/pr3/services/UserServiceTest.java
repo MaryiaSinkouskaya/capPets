@@ -11,7 +11,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.mockito.MockitoAnnotations.openMocks;
 import static pr3.utils.TestUtils.createUser;
 import static pr3.utils.TestUtils.invalidId;
 
@@ -24,7 +24,7 @@ public class UserServiceTest {
 
     @Before
     public void setUp() {
-        initMocks(this);
+        openMocks(this);
         userService = new UserService(userRepository);
     }
 

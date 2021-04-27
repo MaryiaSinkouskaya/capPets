@@ -23,7 +23,7 @@ public class PetService {
     }
 
     public List<Pets> getStrangersTypedPets(String type, Integer userId) {
-        return petRepository.getStrangersTypedPets(type, userId);
+        return petRepository.getPetsByTypeForUser(type, userId);
     }
 
     public Pets updatePet(Pets pet) {

@@ -7,16 +7,15 @@ import org.junit.Test;
 import org.mockito.Mock;
 import pr3.repositories.PetRepository;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static java.util.Collections.*;
+import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.mockito.MockitoAnnotations.openMocks;
 import static pr3.utils.TestUtils.CAT;
 import static pr3.utils.TestUtils.createPet;
 import static pr3.utils.TestUtils.createPets;
@@ -33,7 +32,7 @@ public class PetServiceTest {
 
     @Before
     public void setUp() {
-        initMocks(this);
+        openMocks(this);
         petService = new PetService(petRepository);
     }
 
@@ -64,7 +63,7 @@ public class PetServiceTest {
         //Given
         List<Pets> pets = createPets();
         Integer userId = validId();
-        when(petRepository.getStrangersTypedPets(CAT, userId)).thenReturn(pets);
+        when(petRepository.getPetsByTypeForUser(CAT, userId)).thenReturn(pets);
         //When
         List<Pets> receivedPets = petService.getStrangersTypedPets(CAT, userId);
         //Then
@@ -75,7 +74,7 @@ public class PetServiceTest {
     public void getStrangersTypedPets_GivenPetTypeAndInvalidUserId_ShouldReturnEmptyList() {
         //Given
         Integer userId = invalidId();
-        when(petRepository.getStrangersTypedPets(CAT, userId)).thenReturn(emptyList());
+        when(petRepository.getPetsByTypeForUser(CAT, userId)).thenReturn(emptyList());
         //When
         List<Pets> receivedPets = petService.getStrangersTypedPets(CAT, userId);
         //Then
@@ -87,7 +86,7 @@ public class PetServiceTest {
         //Given
         String type = "unknownType";
         Integer userId = invalidId();
-        when(petRepository.getStrangersTypedPets(type, userId)).thenReturn(emptyList());
+        when(petRepository.getPetsByTypeForUser(type, userId)).thenReturn(emptyList());
         //When
         List<Pets> receivedPets = petService.getStrangersTypedPets(type, userId);
         //Then

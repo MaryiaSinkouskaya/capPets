@@ -4,7 +4,6 @@ import cds.gen.catalogservice.Users;
 import pr3.dto.UserDto;
 
 import static java.lang.Math.random;
-import static pr3.dto.UserDto.builder;
 
 public class TestUtils {
 
@@ -22,6 +21,6 @@ public class TestUtils {
     public static UserDto wrapUserIdByDto(Integer userId) {
         Users user = Users.create();
         user.setId(userId);
-        return builder().user(user).build();
+        return UserDto.builder().user(user).build();
     }
 }
