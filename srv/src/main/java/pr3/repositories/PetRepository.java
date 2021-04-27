@@ -1,7 +1,8 @@
-package pr3.repository;
+package pr3.repositories;
 
 import cds.gen.catalogservice.Pets;
 import cds.gen.catalogservice.Pets_;
+import com.sap.cds.EmptyResultException;
 import com.sap.cds.ql.Select;
 import com.sap.cds.ql.Update;
 import com.sap.cds.services.persistence.PersistenceService;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Collections.emptyList;
+import static java.util.Optional.empty;
 import static java.util.Optional.ofNullable;
 
 @Repository
@@ -23,7 +26,12 @@ public class PetRepository {
         Select<Pets_> select = Select
                 .from(Pets_.class)
                 .where(pets_ -> pets_.ID().eq(petId));
-        return ofNullable(db.run(select).single(Pets.class));
+        try {
+            Pets receivedPet = db.run(select).single(Pets.class);
+            return ofNullable(receivedPet);
+        } catch (EmptyResultException e) {
+            return empty();
+        }
     }
 
     public List<Pets> getStrangersTypedPets(String type, Integer userId) {
@@ -31,7 +39,11 @@ public class PetRepository {
                 .where(pet -> pet
                         .type().eq(type)
                         .and(pet.user_ID().ne(userId)));
-        return db.run(select).listOf(Pets.class);
+        try {
+            return db.run(select).listOf(Pets.class);
+        } catch (EmptyResultException e) {
+            return emptyList();
+        }
     }
 
     public Pets updatePet(Pets pet) {

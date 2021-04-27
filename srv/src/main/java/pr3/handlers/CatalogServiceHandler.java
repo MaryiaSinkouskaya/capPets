@@ -13,8 +13,8 @@ import com.sap.cds.services.handler.annotations.ServiceName;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import pr3.provider.IdProvider;
-import pr3.service.PetService;
-import pr3.service.UserService;
+import pr3.services.PetService;
+import pr3.services.UserService;
 import pr3.validators.CatalogServiceValidator;
 
 import java.util.List;
@@ -48,6 +48,7 @@ public class CatalogServiceHandler implements EventHandler {
     private Users attachUserToPets(String type, Integer userId) {
         Users user = userService.getUser(userId);
         List<Pets> resultPets = petService.getStrangersTypedPets(type, userId);
+        catalogServiceValidator.checkPetsExistence(resultPets, type);
         resultPets.forEach(pet -> attach(pet, userId));
         return user;
     }
@@ -58,10 +59,10 @@ public class CatalogServiceHandler implements EventHandler {
     }
 
     private Pets attach(Pets pet, Integer userId) {
+        catalogServiceValidator.checkUserExistence(userId);
         catalogServiceValidator.checkAttaching(pet.getUserId(), userId);
         pet.setUserId(userId);
         pet = petService.updatePet(pet);
         return pet;
     }
-
 }

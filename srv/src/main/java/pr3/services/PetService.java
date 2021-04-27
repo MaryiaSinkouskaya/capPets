@@ -1,13 +1,15 @@
-package pr3.service;
+package pr3.services;
 
 import cds.gen.catalogservice.Pets;
 import com.sap.cds.services.ServiceException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pr3.repository.PetRepository;
+import pr3.repositories.PetRepository;
 
 import java.util.List;
 import java.util.Optional;
+
+import static com.sap.cds.services.ErrorStatuses.NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -17,7 +19,7 @@ public class PetService {
 
     public Pets getPet(Integer petId) {
         Optional<Pets> pet = petRepository.getPet(petId);
-        return pet.orElseThrow(() -> new ServiceException("Pet not found or doesn't exist"));
+        return pet.orElseThrow(() -> new ServiceException(NOT_FOUND, "Pet not found or doesn't exist"));
     }
 
     public List<Pets> getStrangersTypedPets(String type, Integer userId) {
