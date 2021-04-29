@@ -6,10 +6,11 @@ import pr3.repositories.PetRepository
 import pr3.services.PetService
 import spock.lang.Specification
 
-import static pr3.utils.TestUtils.validId
-import static pr3.utils.TestUtils.invalidId
-import static pr3.utils.TestUtils.createPets
+import static java.util.Collections.emptyList
 import static pr3.utils.TestUtils.CAT
+import static pr3.utils.TestUtils.createPets
+import static pr3.utils.TestUtils.invalidId
+import static pr3.utils.TestUtils.validId
 
 class PetServiceTest extends Specification {
 
@@ -61,4 +62,44 @@ class PetServiceTest extends Specification {
         then:
         actualPets == pets
     }
+
+    def "getPetsByTypeForUser with invalid UserId should return empty list"() {
+
+        def userId = invalidId()
+
+        petRepository.getPetsByTypeForUser(CAT, userId) >> emptyList()
+
+        when:
+        def actualPets = petService.getPetsByTypeForUser(CAT, userId)
+
+        then:
+        actualPets.isEmpty()
+    }
+
+    def "getPetsByTypeForUser with unknown type should return empty list"() {
+
+        def userId = validId()
+
+        petRepository.getPetsByTypeForUser("unknownType", userId) >> emptyList()
+
+        when:
+        def actualPets = petService.getPetsByTypeForUser("unknownType", userId)
+
+        then:
+        actualPets.isEmpty()
+    }
+
+    def "updatePet should return pet"() {
+        def pet = Pets.create()
+
+        petRepository.updatePet(pet) >> pet
+
+        when:
+        def actualPet = petService.updatePet(pet)
+
+        then:
+        actualPet == pet
+    }
+
+
 }
