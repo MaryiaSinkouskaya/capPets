@@ -1,4 +1,4 @@
-package pr3.handlers;
+package pr3.junit.handlers;
 
 import cds.gen.catalogservice.AttachUserContext;
 import cds.gen.catalogservice.ChangeUserContext;
@@ -9,6 +9,7 @@ import com.sap.cds.services.ServiceException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import pr3.handlers.CatalogServiceHandler;
 import pr3.provider.IdProvider;
 import pr3.services.PetService;
 import pr3.services.UserService;
@@ -142,7 +143,7 @@ public class CatalogServiceHandlerTest {
 
         when(idProvider.getId(any(CqnSelect.class))).thenReturn(user.getId());
         when(userService.getUser(user.getId())).thenReturn(user);
-        when(petService.getStrangersTypedPets(type, user.getId())).thenReturn(pets);
+        when(petService.getPetsByTypeForUser(type, user.getId())).thenReturn(pets);
         doNothing().when(catalogServiceValidator).checkAttaching(any(Integer.class), any(Integer.class));
         when(petService.updatePet(any(Pets.class))).thenReturn(updatedPet);
         //When
@@ -150,7 +151,7 @@ public class CatalogServiceHandlerTest {
         //Then
         verify(idProvider, times(1)).getId(any());
         verify(userService, times(1)).getUser(user.getId());
-        verify(petService, times(1)).getStrangersTypedPets(type, user.getId());
+        verify(petService, times(1)).getPetsByTypeForUser(type, user.getId());
         verify(petService, times(pets.size())).updatePet(any(Pets.class));
     }
 
@@ -183,7 +184,7 @@ public class CatalogServiceHandlerTest {
 
         when(idProvider.getId(any(CqnSelect.class))).thenReturn(user.getId());
         when(userService.getUser(user.getId())).thenReturn(user);
-        when(petService.getStrangersTypedPets(type, user.getId())).thenReturn(pets);
+        when(petService.getPetsByTypeForUser(type, user.getId())).thenReturn(pets);
         doThrow(new ServiceException("Pets not found or don't exist"))
                 .when(catalogServiceValidator).checkPetsExistence(pets, type);
         //When

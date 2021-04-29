@@ -1,4 +1,4 @@
-package pr3.services;
+package pr3.junit.services;
 
 import cds.gen.catalogservice.Pets;
 import com.sap.cds.services.ServiceException;
@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import pr3.repositories.PetRepository;
+import pr3.services.PetService;
 
 import java.util.List;
 import java.util.Optional;
@@ -55,40 +56,40 @@ public class PetServiceTest {
         when(petRepository.getPet(pet.getId()))
                 .thenThrow(new ServiceException("Pet not found or doesn't exist"));
         //When
-        Pets receivedPet = petService.getPet(pet.getId());
+        petService.getPet(pet.getId());
     }
 
     @Test
-    public void getStrangersTypedPets_GivenPetTypeAndUserId_ShouldReturnPets() {
+    public void getPetsByTypeForUser_GivenPetTypeAndUserId_ShouldReturnPets() {
         //Given
         List<Pets> pets = createPets();
         Integer userId = validId();
         when(petRepository.getPetsByTypeForUser(CAT, userId)).thenReturn(pets);
         //When
-        List<Pets> receivedPets = petService.getStrangersTypedPets(CAT, userId);
+        List<Pets> receivedPets = petService.getPetsByTypeForUser(CAT, userId);
         //Then
         assertFalse(receivedPets.isEmpty());
     }
 
     @Test
-    public void getStrangersTypedPets_GivenPetTypeAndInvalidUserId_ShouldReturnEmptyList() {
+    public void getPetsByTypeForUser_GivenPetTypeAndInvalidUserId_ShouldReturnEmptyList() {
         //Given
         Integer userId = invalidId();
         when(petRepository.getPetsByTypeForUser(CAT, userId)).thenReturn(emptyList());
         //When
-        List<Pets> receivedPets = petService.getStrangersTypedPets(CAT, userId);
+        List<Pets> receivedPets = petService.getPetsByTypeForUser(CAT, userId);
         //Then
         assertTrue(receivedPets.isEmpty());
     }
 
     @Test
-    public void getStrangersTypedPets_GivenPetUnknownTypeAndUserId_ShouldReturnEmptyList() {
+    public void getPetsByTypeForUser_GivenPetUnknownTypeAndUserId_ShouldReturnEmptyList() {
         //Given
         String type = "unknownType";
         Integer userId = invalidId();
         when(petRepository.getPetsByTypeForUser(type, userId)).thenReturn(emptyList());
         //When
-        List<Pets> receivedPets = petService.getStrangersTypedPets(type, userId);
+        List<Pets> receivedPets = petService.getPetsByTypeForUser(type, userId);
         //Then
         assertTrue(receivedPets.isEmpty());
     }

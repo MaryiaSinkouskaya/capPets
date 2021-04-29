@@ -1,4 +1,4 @@
-package pr3.services;
+package pr3.junit.services;
 
 import cds.gen.catalogservice.Users;
 import com.sap.cds.services.ServiceException;
@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import pr3.repositories.UserRepository;
+import pr3.services.UserService;
 
 import java.util.Optional;
 

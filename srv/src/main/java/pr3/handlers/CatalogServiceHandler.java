@@ -47,7 +47,7 @@ public class CatalogServiceHandler implements EventHandler {
 
     private Users attachUserToPets(String type, Integer userId) {
         Users user = userService.getUser(userId);
-        List<Pets> resultPets = petService.getStrangersTypedPets(type, userId);
+        List<Pets> resultPets = petService.getPetsByTypeForUser(type, userId);
         catalogServiceValidator.checkPetsExistence(resultPets, type);
         resultPets.forEach(pet -> attach(pet, userId));
         return user;

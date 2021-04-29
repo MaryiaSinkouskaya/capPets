@@ -22,7 +22,7 @@ public class PetService {
         return pet.orElseThrow(() -> new ServiceException(NOT_FOUND, "Pet not found or doesn't exist"));
     }
 
-    public List<Pets> getStrangersTypedPets(String type, Integer userId) {
+    public List<Pets> getPetsByTypeForUser(String type, Integer userId) {
         return petRepository.getPetsByTypeForUser(type, userId);
     }
 

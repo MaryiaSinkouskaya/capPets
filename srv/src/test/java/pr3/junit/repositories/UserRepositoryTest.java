@@ -1,4 +1,4 @@
-package pr3.repositories;
+package pr3.junit.repositories;
 
 import cds.gen.catalogservice.Users;
 import com.sap.cds.Result;
@@ -8,6 +8,7 @@ import com.sap.cds.services.persistence.PersistenceService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import pr3.repositories.UserRepository;
 
 import java.util.Optional;
 

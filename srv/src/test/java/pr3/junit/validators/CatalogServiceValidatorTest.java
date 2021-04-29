@@ -1,10 +1,11 @@
-package pr3.validators;
+package pr3.junit.validators;
 
 import com.sap.cds.services.ServiceException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import pr3.services.UserService;
+import pr3.validators.CatalogServiceValidator;
 
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
