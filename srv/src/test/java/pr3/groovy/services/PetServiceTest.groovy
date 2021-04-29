@@ -1,9 +1,10 @@
 package pr3.groovy.services
 
-import cds.gen.catalogservice.Pets
+
 import com.sap.cds.services.ServiceException
 import pr3.repositories.PetRepository
 import pr3.services.PetService
+import pr3.utils.TestUtils
 import spock.lang.Specification
 
 import static java.util.Collections.emptyList
@@ -19,9 +20,8 @@ class PetServiceTest extends Specification {
 
     def "getPet should return pet"() {
 
-        def petId = validId()
-        def pet = Pets.create()
-        pet.setId(petId)
+        def pet = TestUtils.createPet(CAT)
+        def petId = pet.getId()
 
         petRepository.getPet(petId) >> pet
 
@@ -34,9 +34,8 @@ class PetServiceTest extends Specification {
 
     def "getPet throws Service exception when gets invalid userId"() {
 
-        def petId = invalidId()
-        def pet = Pets.create()
-        pet.setId(petId)
+        def pet = TestUtils.createPet(CAT)
+        def petId = pet.getId()
 
         petRepository.getPet(petId) >> {
             throw new ServiceException("Pet not found or doesn't exist")
@@ -48,6 +47,24 @@ class PetServiceTest extends Specification {
         then:
         thrown(ServiceException)
     }
+
+    def "getPet throws Service exception when gets invalid petId"() {
+
+        def pet = TestUtils.createPet(CAT)
+        pet.setId(invalidId())
+        def petId = pet.getId()
+
+        petRepository.getPet(petId) >> {
+            throw new ServiceException("Pet not found or doesn't exist")
+        }
+
+        when:
+        petService.getPet(petId)
+
+        then:
+        thrown(ServiceException)
+    }
+
 
     def "getPetsByTypeForUser should return pets"() {
 
@@ -90,7 +107,7 @@ class PetServiceTest extends Specification {
     }
 
     def "updatePet should return pet"() {
-        def pet = Pets.create()
+        def pet = TestUtils.createPet(CAT)
 
         petRepository.updatePet(pet) >> pet
 
@@ -100,6 +117,4 @@ class PetServiceTest extends Specification {
         then:
         actualPet == pet
     }
-
-
 }

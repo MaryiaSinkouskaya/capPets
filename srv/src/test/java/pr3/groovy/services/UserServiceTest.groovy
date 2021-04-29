@@ -1,13 +1,13 @@
 package pr3.groovy.services
 
-import cds.gen.catalogservice.Users
+
 import com.sap.cds.services.ServiceException
 import pr3.repositories.UserRepository
 import pr3.services.UserService
+import pr3.utils.TestUtils
 import spock.lang.Specification
 
 import static pr3.utils.TestUtils.invalidId
-import static pr3.utils.TestUtils.validId
 
 class UserServiceTest extends Specification {
 
@@ -16,9 +16,8 @@ class UserServiceTest extends Specification {
 
     def "getUser should return user"() {
 
-        def userId = validId()
-        def user = Users.create()
-        user.setId(userId)
+        def user = TestUtils.createUser()
+        def userId = user.getId()
 
         userRepository.getUser(userId) >> user
 
@@ -31,9 +30,9 @@ class UserServiceTest extends Specification {
 
     def "getUser throws Service exception when gets invalid userId"() {
 
-        def userId = invalidId()
-        def user = Users.create()
-        user.setId(userId)
+        def user = TestUtils.createUser()
+        user.setId(invalidId())
+        def userId = user.getId()
 
         userRepository.getUser(userId) >> {
             throw new ServiceException("User not found or doesn't exist")

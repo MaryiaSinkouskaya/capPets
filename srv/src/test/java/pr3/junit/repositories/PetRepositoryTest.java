@@ -75,7 +75,7 @@ public class PetRepositoryTest {
     }
 
     @Test
-    public void getStrangersTypedPets_GivenPetTypeAndUserId_ShouldReturnPets() {
+    public void getPetsByTypeForUser_GivenPetTypeAndUserId_ShouldReturnPets() {
         //Given
         List<Pets> pets = createPets();
         Integer userId = validId();
@@ -90,7 +90,7 @@ public class PetRepositoryTest {
     }
 
     @Test
-    public void getStrangersTypedPets_GivenUnknownPetTypeAndUserId_ShouldReturnEmptyList() {
+    public void getPetsByTypeForUser_GivenUnknownPetTypeAndUserId_ShouldReturnEmptyList() {
         //Given
         Integer userId = validId();
         Result result = insertedRows(emptyList()).result();
@@ -104,7 +104,7 @@ public class PetRepositoryTest {
     }
 
     @Test
-    public void getStrangersTypedPets_GivenPetTypeAndInvalidUserId_ShouldReturnEmptyList() {
+    public void getPetsByTypeForUser_GivenPetTypeAndInvalidUserId_ShouldReturnEmptyList() {
         //Given
         Integer userId = invalidId();
         Result result = insertedRows(emptyList()).result();
