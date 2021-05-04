@@ -12,10 +12,11 @@ class CatalogServiceValidatorTest extends Specification {
     def userService = Mock(UserService)
     def catalogServiceValidator = new CatalogServiceValidator(userService)
 
+
     //todo: rename all def's
     def "checkAttaching should throw ServiceException"() {
 
-        def id = validId();
+        def id = validId()
 
         when:
         catalogServiceValidator.checkAttaching(id, id)
@@ -26,13 +27,13 @@ class CatalogServiceValidatorTest extends Specification {
 
     def "checkUserExistence should throw ServiceException"() {
 
-        Integer userId = validId();
+        Integer userId = validId()
         userService.getUser(userId) >> {
             throw new ServiceException("User not found or doesn't exist")
         }
 
         when:
-        catalogServiceValidator.checkUserExistence(userId);
+        catalogServiceValidator.checkUserExistence(userId)
 
         then:
         thrown(ServiceException)

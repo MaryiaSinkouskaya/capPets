@@ -23,7 +23,7 @@ class PetRepositoryTest extends Specification {
         def receivedPet = petRepository.getPet(pet.getId())
         def receivedId = receivedPet
                 .orElseThrow({ -> new ServiceException("Pet not found or doesn't exist") })
-                .getId();
+                .getId()
 
         then:
         receivedId == pet.getId()
